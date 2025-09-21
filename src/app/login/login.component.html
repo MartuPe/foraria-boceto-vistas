@@ -1,0 +1,259 @@
+<!-- Contenedor principal -->
+<div
+  class="min-h-screen flex items-center justify-center"
+  style="background-color: #ebebd3"
+>
+  <div class="w-full px-4 max-w-sm">
+    <div
+      class="rounded-2xl shadow-xl overflow-hidden"
+      style="background-color: #083d77"
+    >
+      <!-- Logo -->
+      <div class="pt-8 pb-6 text-center">
+        <div class="w-20 h-20 mx-auto mb-4 relative">
+          <svg
+            viewBox="0 0 100 100"
+            class="w-full h-full"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <!-- Logo SVG -->
+            <path
+              d="M20 30 L50 10 L80 30 L80 50 L65 60 L50 50 L35 60 L20 50 Z"
+              fill="#ee964b"
+            />
+            <path
+              d="M35 60 L50 50 L65 60 L65 80 L50 90 L35 80 Z"
+              fill="#f95738"
+            />
+            <path d="M20 50 L35 60 L35 80 L20 70 Z" fill="#f4d35e" />
+            <path d="M65 60 L80 50 L80 70 L65 80 Z" fill="#f4d35e" />
+          </svg>
+        </div>
+        <h1 class="text-white font-montserrat text-2xl mb-2">
+          {{ isRecoveryMode ? "Recuperar Contraseña" : "Iniciar Sesión" }}
+        </h1>
+        <p
+          *ngIf="isRecoveryMode"
+          class="text-white/80 font-montserrat text-sm px-4"
+        >
+          Ingresa tu email y te enviaremos un enlace para recuperar tu
+          contraseña
+        </p>
+      </div>
+
+      <!-- Forms -->
+      <div class="px-8 pb-8">
+        <!-- Formulario de Recuperación -->
+        <form
+          *ngIf="isRecoveryMode"
+          (ngSubmit)="handleRecoverySubmit($event)"
+          class="space-y-6"
+        >
+          <!-- Botón Volver -->
+          <div class="flex justify-start">
+            <button
+              type="button"
+              (click)="backToLogin()"
+              class="flex items-center gap-2 text-white text-sm font-montserrat hover:text-white/80 transition-colors"
+            >
+              <lucide-icon name="arrow-left" [size]="16"></lucide-icon>
+              Volver al login
+            </button>
+          </div>
+
+          <!-- Mensaje de Éxito -->
+          <div
+            *ngIf="recoverySuccess"
+            class="bg-green-500/20 border border-green-400 rounded-lg p-4 text-center"
+          >
+            <lucide-icon
+              name="mail"
+              [size]="32"
+              class="text-green-400 mx-auto mb-2"
+            ></lucide-icon>
+            <p class="text-green-400 font-montserrat text-sm">
+              ¡Correo enviado! Revisa tu bandeja de entrada para continuar con
+              la recuperación.
+            </p>
+          </div>
+
+          <!-- Campo Email -->
+          <div>
+            <label
+              for="recoveryEmail"
+              class="font-montserrat text-white text-sm mb-2 block"
+            >
+              Email:
+            </label>
+            <input
+              id="recoveryEmail"
+              type="email"
+              [(ngModel)]="recoveryEmail"
+              (input)="clearRecoveryEmailError()"
+              placeholder=""
+              class="w-full font-montserrat rounded-full border-0 text-gray-800 px-4 py-3 focus:ring-2 focus:ring-white/20 focus:bg-white"
+              [class.ring-2]="errors.recoveryEmail"
+              [class.ring-red-400]="errors.recoveryEmail"
+              style="background-color: #ebebd3"
+            />
+            <p
+              *ngIf="errors.recoveryEmail"
+              class="text-red-300 text-xs mt-1 font-montserrat"
+            >
+              {{ errors.recoveryEmail }}
+            </p>
+          </div>
+
+          <!-- Botón Recuperar -->
+          <div class="pt-4">
+            <button
+              type="submit"
+              [disabled]="isLoading || recoverySuccess"
+              class="w-full font-montserrat rounded-full py-3 transition-all duration-200 disabled:opacity-50 border-0"
+              style="background-color: #ebebd3; color: #083d77"
+            >
+              <div
+                *ngIf="isLoading"
+                class="flex items-center justify-center gap-2"
+              >
+                <div
+                  class="w-4 h-4 border-2 border-t-transparent rounded-full animate-spin"
+                  style="border-color: #083d77; border-top-color: transparent"
+                ></div>
+                Enviando...
+              </div>
+
+              <span *ngIf="!isLoading">Enviar enlace de recuperación</span>
+            </button>
+          </div>
+        </form>
+
+        <!-- Formulario de Login -->
+        <form
+          *ngIf="!isRecoveryMode"
+          (ngSubmit)="handleSubmit($event)"
+          class="space-y-6"
+        >
+          <!-- Campo Email -->
+          <div>
+            <label
+              for="username"
+              class="font-montserrat text-white text-sm mb-2 block"
+            >
+              Email:
+            </label>
+            <div class="relative">
+              <input
+                id="username"
+                type="text"
+                [(ngModel)]="username"
+                (input)="clearUsernameError()"
+                placeholder=""
+                class="w-full font-montserrat rounded-full border-0 text-gray-800 px-4 py-3 focus:ring-2 focus:ring-white/20 focus:bg-white"
+                [class.ring-2]="errors.username"
+                [class.ring-red-400]="errors.username"
+                style="background-color: #ebebd3"
+              />
+            </div>
+            <p
+              *ngIf="errors.username"
+              class="text-red-300 text-xs mt-1 font-montserrat"
+            >
+              {{ errors.username }}
+            </p>
+          </div>
+
+          <!-- Campo Password -->
+         <div>
+  <label for="password" class="font-montserrat text-white text-sm mb-2 block">
+    Password:
+  </label>
+  <div class="relative">
+    <input
+      id="password"
+      [type]="showPassword ? 'text' : 'password'"
+      [(ngModel)]="password"
+      (input)="clearPasswordError()"
+      placeholder=""
+      class="w-full font-montserrat rounded-full border-0 text-gray-800 px-4 py-3 pr-12 transition-all"
+      [class.ring-error]="errors.password"
+      style="background-color: #ebebd3;" />
+    
+    <button
+      type="button"
+      (click)="togglePasswordVisibility()"
+      class="password-toggle-btn">
+      <lucide-icon [name]="showPassword ? 'eye-off' : 'eye'" [size]="16"></lucide-icon>
+    </button>
+  </div>
+  <p *ngIf="errors.password" class="text-red-300 text-xs mt-1 font-montserrat">
+    {{ errors.password }}
+  </p>
+</div>
+
+          <!-- Botones Login -->
+          <div class="pt-4 space-y-3">
+            <button
+              type="submit"
+              [disabled]="isLoading"
+              class="w-full font-montserrat rounded-full py-3 transition-all duration-200 disabled:opacity-50 border-0"
+              style="background-color: #ebebd3; color: #083d77"
+            >
+              <div
+                *ngIf="isLoading"
+                class="flex items-center justify-center gap-2"
+              >
+                <div
+                  class="w-4 h-4 border-2 border-t-transparent rounded-full animate-spin"
+                  style="border-color: #083d77; border-top-color: transparent"
+                ></div>
+                Iniciando sesión...
+              </div>
+
+              <span *ngIf="!isLoading">Iniciar Sesión</span>
+            </button>
+
+            <!-- Botón Admin -->
+            <button
+              type="button"
+              (click)="handleAdminLogin()"
+              [disabled]="isLoading"
+              class="w-full font-montserrat rounded-full py-3 transition-all duration-200 disabled:opacity-50 border-2"
+              style="
+                background-color: transparent;
+                color: #ebebd3;
+                border-color: #ebebd3;
+              "
+            >
+              <div
+                *ngIf="isLoading"
+                class="flex items-center justify-center gap-2"
+              >
+                <div
+                  class="w-4 h-4 border-2 border-t-transparent rounded-full animate-spin"
+                  style="border-color: #ebebd3; border-top-color: transparent"
+                ></div>
+                Accediendo...
+              </div>
+
+              <span *ngIf="!isLoading">Acceso Administrador</span>
+            </button>
+          </div>
+
+          <!-- Enlace Recuperar Contraseña -->
+          <div class="text-center pt-2">
+            <button
+              type="button"
+              class="forgot-password-btn text-white font-montserrat underline hover:no-underline transition-all duration-200"
+              (click)="handleRecovery()"
+            >
+              olvidé mi contraseña
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
