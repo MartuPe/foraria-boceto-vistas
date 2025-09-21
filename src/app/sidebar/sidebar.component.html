@@ -1,0 +1,107 @@
+<div class="sidebar-container">
+  <!-- Header -->
+  <div class="sidebar-header">
+    <div class="logo-container">
+      <div class="logo-placeholder">F</div>
+      <div>
+        <div class="sidebar-title">{{ customization.logo }}</div>
+        <div class="sidebar-subtitle">Sistema de Gestión</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="sidebar-nav">
+    <div class="nav-container">
+      <!-- Menu Items -->
+      <button
+        *ngFor="let item of menuItems"
+        (click)="handleItemClick(item.id)"
+        class="menu-button"
+        [class.active]="isItemActive(item.id)"
+      >
+        <div class="button-content">
+          <div class="icon-container">
+            <lucide-icon [name]="item.icon" [size]="18"></lucide-icon>
+          </div>
+          <span class="button-text">{{ item.label }}</span>
+        </div>
+
+        <lucide-icon
+          *ngIf="isItemActive(item.id)"
+          name="chevron-right"
+          [size]="16"
+          class="chevron-icon"
+        >
+        </lucide-icon>
+      </button>
+
+      <!-- Foros with Dropdown -->
+      <div>
+        <button
+          (click)="handleItemClick('foros')"
+          class="menu-button"
+          [class.active]="isForosActive()"
+        >
+          <div class="button-content">
+            <div class="icon-container">
+              <lucide-icon name="users" [size]="18"></lucide-icon>
+            </div>
+            <span class="button-text">Foros</span>
+          </div>
+
+          <!-- Solo mostrar chevron-right si NO está expandido -->
+          <div style="display: flex; align-items: center; gap: 0.25rem">
+            <lucide-icon
+              *ngIf="activeItem.startsWith('foros') && !forosExpanded"
+              name="chevron-right"
+              [size]="16"
+              class="chevron-icon"
+            >
+            </lucide-icon>
+            <!-- Solo mostrar chevron-down si NO hay chevron-right -->
+            <lucide-icon
+              *ngIf="!activeItem.startsWith('foros') || forosExpanded"
+              name="chevron-down"
+              [size]="16"
+              class="chevron-icon transition-transform"
+              [class.rotate-180]="forosExpanded"
+            >
+            </lucide-icon>
+          </div>
+        </button>
+
+        <!-- Dropdown Categories -->
+        <div *ngIf="forosExpanded" class="foros-container">
+          <div class="foros-dropdown">
+            <button
+              *ngFor="let categoria of forosCategorias"
+              (click)="handleForoCategoryClick(categoria.id)"
+              class="category-button"
+              [class.active]="isCategoryActive(categoria.id)"
+            >
+              <div class="category-icon">
+                <lucide-icon [name]="categoria.icon" [size]="14"></lucide-icon>
+              </div>
+              <span class="category-text">{{ categoria.label }}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Separator -->
+    <div class="separator"></div>
+  </nav>
+
+  <!-- User Info -->
+  <div class="user-section">
+    <div class="user-container">
+      <div class="user-avatar">{{ getUserInitials() }}</div>
+      <div class="user-info">
+        <div class="user-name">{{ getUserName() }}</div>
+        <div class="user-department">{{ getUserDepartment() }}</div>
+      </div>
+    </div>
+  </div>
+</div>

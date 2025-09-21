@@ -1,2 +1,26 @@
-<app-login (loginEvent)="onLogin($event)"></app-login>
-<router-outlet></router-outlet>
+<div *ngIf="!currentUser" class="min-h-screen" style="background-color: #ebebd3;">
+  <!-- Login ocupa toda la pantalla como antes -->
+  <app-login (loginEvent)="onLogin($event)"></app-login>
+</div>
+
+<div *ngIf="currentUser" class="flex h-screen">
+  <!-- Sidebar - Solo después del login -->
+  <app-sidebar
+    [activeItem]="currentActiveItem"
+    [isOpen]="sidebarOpen"
+    [user]="currentUser"
+    (itemClick)="onSidebarItemClick($event)"
+    (close)="onSidebarClose()">
+  </app-sidebar>
+
+  <!-- Main Content -->
+  <div class="flex-1 overflow-hidden">
+    <div class="p-6">
+      <h1>Contenido Principal</h1>
+      <p>Elemento activo: {{ currentActiveItem }}</p>
+      <p>Bienvenido: {{ currentUser.name }}</p>
+    </div>
+    
+    <router-outlet></router-outlet>
+  </div>
+</div>

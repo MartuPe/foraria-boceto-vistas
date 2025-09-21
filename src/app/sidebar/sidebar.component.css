@@ -1,0 +1,262 @@
+/* Contenedor principal del sidebar */
+.sidebar-container {
+  width: 18rem;
+  height: 100vh; 
+  background-color: #111827;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #374151;
+  
+  /* Esquinas redondeadas solo en el lado derecho */
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  
+  /* Asegurar que ocupe toda la altura */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Header */
+.sidebar-header {
+  padding: 1.5rem;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.logo-placeholder {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: linear-gradient(135deg, #ee964b, #f95738);
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.sidebar-title {
+  color: white;
+  font-size: 1.125rem;
+  font-weight: 600;
+  font-family: "Montserrat", sans-serif;
+}
+
+.sidebar-subtitle {
+  color: #9ca3af;
+  font-size: 0.875rem;
+  font-family: "Montserrat", sans-serif;
+}
+
+/* Navigation */
+/* Navigation */
+.sidebar-nav {
+  flex: 1;
+  padding: 0 1rem 1rem;
+  overflow-y: auto; /* Permitir scroll vertical */
+  overflow-x: hidden; /* Ocultar scroll horizontal */
+}
+
+/* Opcional: Estilizar la scrollbar */
+.sidebar-nav::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar-nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb {
+  background: #374151;
+  border-radius: 2px;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb:hover {
+  background: #4b5563;
+}
+
+.nav-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+/* Menu buttons */
+.menu-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.875rem 1rem;
+  border-radius: 0.75rem;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+  color: #d1d5db;
+  background: transparent;
+  font-family: "Montserrat", sans-serif;
+}
+
+.menu-button:hover {
+  background-color: #1f2937;
+  color: white;
+}
+
+.menu-button.active {
+  background: linear-gradient(90deg, #2563eb 0%, #9333ea 100%);
+  color: white;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.button-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.button-text {
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+/* Foros dropdown */
+.foros-container {
+  margin-left: 1rem;
+  margin-top: 0.25rem;
+}
+
+.foros-dropdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.category-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.625rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  color: #9ca3af;
+  font-family: "Montserrat", sans-serif;
+}
+
+.category-button:hover {
+  background-color: #1f2937;
+  color: white;
+}
+
+.category-button.active {
+  background-color: rgba(37, 99, 235, 0.8);
+  color: white;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.category-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.category-text {
+  font-size: 0.75rem;
+}
+
+.category-button.active .category-text {
+  font-weight: 500;
+}
+
+/* Separator */
+.separator {
+  margin: 1.5rem 0;
+  height: 1px;
+  background-color: #374151;
+}
+
+/* User info */
+.user-section {
+  padding: 1rem;
+  border-top: 1px solid #1f2937;
+}
+
+.user-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  background-color: rgba(31, 41, 55, 0.5);
+}
+
+.user-avatar {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6, #9333ea);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: "Montserrat", sans-serif;
+}
+
+.user-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.user-name {
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: "Montserrat", sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-department {
+  color: #9ca3af;
+  font-size: 0.75rem;
+  font-family: "Montserrat", sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Chevron icons */
+.chevron-icon {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Rotate animation for dropdown */
+.rotate-180 {
+  transform: rotate(180deg);
+}
+
+.transition-transform {
+  transition: transform 0.2s ease;
+}
